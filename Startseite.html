@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deutsche Bahn - Reiseportal</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="DBLOGOWEIßklein.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            overflow-x: hidden;
+        }
+
+        /* Overlay für die Logo-Animation */
+        .logo-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #d71a28;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+            animation: slideUp 2s ease-in-out forwards;
+        }
+
+        .logo-overlay img {
+            width: 100px; /* Klein und mittig */
+            position: relative;
+            animation: scaleLogos 2s ease-in-out forwards;
+        }
+
+        /* Rote Schweife als abgerundete Rechtecke */
+        .red-tail {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            animation: redTailAnimation 2s ease-in-out forwards;
+        }
+
+        .red-tail div {
+            position: absolute;
+            width: 100px;
+            height: 20px;
+            background: #d71a28;
+            border-radius: 10px; /* Abgerundete Ecken */
+            animation: tailMovement 2s ease-in-out forwards;
+        }
+
+        @keyframes tailMovement {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(300px, 300px) scale(0.5);
+            }
+        }
+
+        @keyframes redTailAnimation {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @keyframes scaleLogos {
+            0% { transform: scale(1.2); }
+            50% { transform: scale(1); }
+            100% { transform: scale(0.5); }
+        }
+
+        @keyframes slideUp {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100vh); }
+        }
+
+        header {
+            background: #d71a28;
+            color: white;
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        header.small {
+            padding: 10px 10%;
+            font-size: 0.9rem;
+        }
+
+        .header-logo {
+            width: 60px;
+            transition: width 0.3s ease;
+        }
+
+        header.small .header-logo {
+            width: 40px;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1rem;
+        }
+
+        header.small nav a {
+            font-size: 0.9rem;
+        }
+
+        header nav a:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            background: url('Bild_2-data.gif') repeat center center/cover;
+            height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .services {
+            padding: 40px 10%;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            background: white;
+        }
+
+        .service {
+            max-width: 300px;
+        }
+
+        .service img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .service img:hover {
+            transform: scale(1.05);
+        }
+
+        .service h3 {
+            margin: 15px 0 10px;
+        }
+
+        .long-content {
+            padding: 50px 10%;
+            background: #e6e6e6;
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        footer {
+            background: #d71a28;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo-Animation -->
+    <div class="logo-overlay">
+        <img src="DBLOGOWEIßklein.png" alt="DB Logo">
+    </div>
+
+    <!-- Rote Schweife als abgerundete Rechtecke -->
+    <div class="red-tail">
+        <div style="top: 50px; left: 50px;"></div>
+        <div style="top: 150px; left: 150px;"></div>
+        <div style="top: 250px; left: 250px;"></div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <img src="DBLOGOWEIßklein.png" alt="DB Logo" class="header-logo">
+        <nav>
+            <a href="Startseite.html">Startseite</a>
+            <a href="Tickets.html">Tickets</a>
+            <a href="#">Reiseziele</a>
+            <a href="#">Kontakt</a>
+        </nav>
+    </header>
+
+    <!-- Hero-Bereich -->
+    <div class="hero">
+        <h2>Reisen Sie bequem und sicher mit der Deutschen Bahn!</h2>
+    </div>
+
+    <!-- Service-Bereich -->
+    <section class="services">
+        <div class="service">
+            <img src="ICE.jpg" alt="ICE Zug">
+            <h3>Unsere Züge</h3>
+            <p>Erfahren Sie mehr über unsere moderne Zugflotte, inklusive ICE, IC und Regionalzüge.</p>
+        </div>
+        <div class="service">
+            <img src="https://via.placeholder.com/300x200" alt="Fahrkartenautomat">
+            <h3>Tickets buchen</h3>
+            <p>Kaufen Sie Ihre Fahrkarten online oder an unseren Automaten – einfach und schnell.</p>
+        </div>
+        <div class="service">
+            <img src="https://via.placeholder.com/300x200" alt="Bahnhof">
+            <h3>Bahnhöfe</h3>
+            <p>Entdecken Sie unsere Bahnhöfe mit tollen Services und Möglichkeiten zum Verweilen.</p>
+        </div>
+    </section>
+
+    <!-- Zusätzlicher Content -->
+    <section class="long-content">
+        <h2>Über die Deutsche Bahn</h2>
+        <p>Die Deutsche Bahn ist eines der größten Verkehrsunternehmen der Welt und bietet Millionen von Menschen täglich komfortable Reisemöglichkeiten. Mit modernster Technologie, nachhaltigen Lösungen und einem umfassenden Netz verbindet die Deutsche Bahn Städte und Regionen in ganz Deutschland und darüber hinaus.</p>
+        <p>Unsere Mission ist es, den Reisenden ein einzigartiges Erlebnis zu bieten – von modernen Zügen bis hin zu erstklassigen Services in unseren Bahnhöfen. Erleben Sie die Zukunft des Reisens mit der Deutschen Bahn.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Deutsche Bahn. Alle Rechte vorbehalten. <a href="#">Datenschutz</a> | <a href="#">Impressum</a></p>
+    </footer>
+
+    <script>
+        // Audio abspielen während der Animation
+        var audio = new Audio('DBSound.mp3');
+        audio.play();
+
+        // Animationen nach Ende des Sounds
+        audio.onended = function() {
+            document.querySelector('.logo-overlay').style.animation = 'slideUp 2s ease-in-out forwards';
+        }
+    </script>
+</body>
+</html>
