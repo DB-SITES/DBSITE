@@ -75,6 +75,12 @@
     <audio id="dbSound" src="dbsound.mp3" preload="auto"></audio>
 
     <script>
+        // Audio nur beim Laden der Seite abspielen
+        window.addEventListener('load', function() {
+            var audio = document.getElementById('dbSound');
+            audio.play(); // Der Sound wird beim Laden der Seite abgespielt
+        });
+
         // Benutzerkonten mit Benutzernamen und Passwörtern
         const users = {
             "admin": "1234",
