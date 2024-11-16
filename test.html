@@ -1,14 +1,162 @@
-// Event-Listener für das Einlösen des Codes
-document.getElementById('bahnid-submit').addEventListener('click', function() {
-    const enteredCode = document.getElementById('bahnid-code').value;
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Deutsche Bahn</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-    if (enteredCode === "2202") {
-        // Erfolgreiche Code-Eingabe, weiterleiten
-        setTimeout(function() {
-            window.location.href = 'https://xyswift-tools.github.io/DBSITE/start.html';
-        }, 2000);
-    } else {
-        // Falscher Code
-        document.getElementById('code-error-message').style.display = 'block';
-    }
-});
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #e2001a; /* DB Rot */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #c10015;
+        }
+
+        #error-message {
+            color: red;
+            display: none;
+        }
+
+        #code-container {
+            display: none;
+            margin-top: 10px;
+        }
+
+        #code-error-message {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <img src="dblogorotklein.png" alt="Deutsche Bahn Logo" class="logo">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Benutzername" required>
+            <input type="password" id="password" placeholder="Passwort" required>
+            <button type="submit">Einloggen</button>
+        </form>
+        <p id="error-message">Falscher Benutzername oder Passwort.</p>
+
+        <!-- Button für die Anmeldung mit BahnID -->
+        <button id="bahnid-button" type="button">Mit BahnID anmelden</button>
+
+        <!-- Container für das Code-Feld -->
+        <div id="code-container">
+            <input type="text" id="bahnid-code" placeholder="Code eingeben" required>
+            <button id="bahnid-submit" type="button">Code einlösen</button>
+            <p id="code-error-message">Falscher Code.</p>
+        </div>
+    </div>
+
+    <audio id="dbSound" src="dbsound.mp3" preload="auto"></audio>
+
+    <script>
+        // Audio nur beim Laden der Seite abspielen
+        window.addEventListener('load', function() {
+            var audio = document.getElementById('dbSound');
+            audio.play(); // Der Sound wird beim Laden der Seite abgespielt
+        });
+
+        // Benutzerkonten mit Benutzernamen und Passwörtern
+        const users = {
+            "admin": "1234",
+            "DB": "2345",
+            "ICE": "3456",
+            "IC": "4567",
+            "FlixTrain": "5678"
+        };
+
+        // Event-Listener für das Login-Formular
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Verhindert das Absenden des Formulars
+
+            // Eingabe des Benutzernamens und Passworts
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Überprüfen, ob der Benutzername und das Passwort übereinstimmen
+            if (users[username] && users[username] === password) {
+                // Erfolgreicher Login
+                document.getElementById('dbSound').play(); // Sound abspielen
+
+                // Weiterleitung zur Startseite nach 2 Sekunden
+                setTimeout(function() {
+                    window.location.href = 'https://xyswift-tools.github.io/DBSITE/start.html';
+                }, 2000); // 2 Sekunden warten
+            } else {
+                // Fehlermeldung anzeigen, wenn die Anmeldedaten falsch sind
+                document.getElementById('error-message').style.display = 'block';
+            }
+        });
+
+        // Event-Listener für den Button "Mit BahnID anmelden"
+        document.getElementById('bahnid-button').addEventListener('click', function() {
+            // Zeigt das Code-Eingabefeld an
+            document.getElementById('code-container').style.display = 'block';
+        });
+
+        // Event-Listener für das Einlösen des Codes
+        document.getElementById('bahnid-submit').addEventListener('click', function() {
+            const enteredCode = document.getElementById('bahnid-code').value;
+
+            // Überprüfen, ob der eingegebene Code korrekt ist
+            if (enteredCode === "2202") {
+                // Erfolgreiche Code-Eingabe, weiterleiten zur gleichen Seite wie bei Login
+                document.getElementById('dbSound').play(); // Sound abspielen
+
+                setTimeout(function() {
+                    window.location.href = 'https://xyswift-tools.github.io/DBSITE/start.html';
+                }, 2000); // 2 Sekunden warten
+            } else {
+                // Fehlermeldung anzeigen, wenn der Code falsch ist
+                document.getElementById('code-error-message').style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+</html>
