@@ -201,6 +201,21 @@
             color: white;
             text-decoration: underline;
         }
+
+        .video-container {
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            position: relative;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
     </style>
 </head>
 <body>
@@ -240,11 +255,10 @@
             <p>Erfahren Sie mehr über unsere moderne Zugflotte, inklusive ICE, IC und Regionalzüge.</p>
         </div>
         <div class="service">
-            <!-- Video wird beim Scrollen abgespielt -->
-            <video id="ticketVideo" width="100%" controls>
-                <source src="https://player.vimeo.com/video/688428596?app_id=122963&referrer=https%3A%2F%2Fwww.whydobirds.de%2F" type="video/mp4">
-                Ihr Browser unterstützt dieses Videoformat nicht.
-            </video>
+            <!-- Vimeo-Video mit iframe -->
+            <div class="video-container" id="videoContainer">
+                <iframe id="videoIframe" src="" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
             <h3>Tickets buchen</h3>
             <p>Kaufen Sie Ihre Fahrkarten online oder an unseren Automaten – einfach und schnell.</p>
         </div>
@@ -290,11 +304,12 @@
         };
 
         // Video abspielen, wenn es in den sichtbaren Bereich kommt
-        const ticketVideo = document.getElementById('ticketVideo');
+        const videoContainer = document.getElementById('videoContainer');
+        const videoIframe = document.getElementById('videoIframe');
         window.addEventListener('scroll', function() {
-            const rect = ticketVideo.getBoundingClientRect();
+            const rect = videoContainer.getBoundingClientRect();
             if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-                ticketVideo.play(); // Video starten, wenn es sichtbar ist
+                videoIframe.src = "https://player.vimeo.com/video/688428596?autoplay=1"; // Video starten, wenn es sichtbar ist
             }
         });
     </script>
