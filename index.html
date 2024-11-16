@@ -264,14 +264,26 @@
     </footer>
 
     <script>
-        // Audio abspielen während der Animation
-        var audio = new Audio('DBSound.mp3');
-        audio.play();
+        // Audio nur beim Laden der Seite abspielen
+        window.addEventListener('load', function() {
+            var audio = new Audio('DBSound.mp3');
+            audio.play(); // Der Sound wird beim Laden der Seite abgespielt
 
-        // Animationen nach Ende des Sounds
-        audio.onended = function() {
-            document.querySelector('.logo-overlay').style.animation = 'slideUp 2s ease-in-out forwards';
-        }
+            // Sobald der Sound endet, wird das Logo-Overlay animiert
+            audio.onended = function() {
+                document.querySelector('.logo-overlay').style.animation = 'slideUp 2s ease-in-out forwards';
+            };
+        });
+
+        // Header verkleinern beim Scrollen
+        window.onscroll = function() {
+            var header = document.getElementById("header");
+            if (window.pageYOffset > 100) {
+                header.classList.add("small");
+            } else {
+                header.classList.remove("small");
+            }
+        };
     </script>
 </body>
 </html>
