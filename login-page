@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Deutsche Bahn</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #e2001a; /* DB Rot */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #c10015;
+        }
+
+        #error-message {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Deutsche_Bahn_logo_2016.svg" alt="Deutsche Bahn Logo" class="logo">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Benutzername" required>
+            <input type="password" id="password" placeholder="Passwort" required>
+            <button type="submit">Einloggen</button>
+        </form>
+        <p id="error-message">Falscher Benutzername oder Passwort.</p>
+    </div>
+
+    <audio id="dbSound" src="dbsound.mp3" preload="auto"></audio>
+
+    <script>
+        // Benutzerkonten mit Benutzernamen und Passwörtern
+        const users = {
+            "reisender123": "1234",
+            "zugfan2024": "2345",
+            "bahnhof_express": "3456",
+            "schnellfahrer56": "4567",
+            "bahnfreund88": "5678"
+        };
+
+        // Event-Listener für das Login-Formular
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Verhindert das Absenden des Formulars
+
+            // Eingabe des Benutzernamens und Passworts
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Überprüfen, ob der Benutzername und das Passwort übereinstimmen
+            if (users[username] && users[username] === password) {
+                // Erfolgreicher Login
+                document.getElementById('dbSound').play(); // Sound abspielen
+
+                // Weiterleitung zu Google nach 2 Sekunden
+                setTimeout(function() {
+                    window.location.href = 'https://www.google.com';
+                }, 2000); // 2 Sekunden warten
+            } else {
+                // Fehlermeldung anzeigen, wenn die Anmeldedaten falsch sind
+                document.getElementById('error-message').style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+</html>
