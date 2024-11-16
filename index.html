@@ -57,6 +57,16 @@
             color: red;
             display: none;
         }
+
+        #code-container {
+            display: none;
+            margin-top: 10px;
+        }
+
+        #code-error-message {
+            color: red;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -70,6 +80,16 @@
             <button type="submit">Einloggen</button>
         </form>
         <p id="error-message">Falscher Benutzername oder Passwort.</p>
+
+        <!-- Button für die Anmeldung mit BahnID -->
+        <button id="bahnid-button" type="button">Mit BahnID anmelden</button>
+
+        <!-- Container für das Code-Feld -->
+        <div id="code-container">
+            <input type="text" id="bahnid-code" placeholder="Code eingeben" required>
+            <button id="bahnid-submit" type="button">Code einlösen</button>
+            <p id="code-error-message">Falscher Code.</p>
+        </div>
     </div>
 
     <audio id="dbSound" src="dbsound.mp3" preload="auto"></audio>
@@ -101,9 +121,9 @@
             // Überprüfen, ob der Benutzername und das Passwort übereinstimmen
             if (users[username] && users[username] === password) {
                 // Erfolgreicher Login
-                document.getElementById('DBSound.mp3').play(); // Sound abspielen
+                document.getElementById('dbSound').play(); // Sound abspielen
 
-                // Weiterleitung zu Google nach 2 Sekunden
+                // Weiterleitung zur Startseite nach 2 Sekunden
                 setTimeout(function() {
                     window.location.href = 'https://xyswift-tools.github.io/DBSITE/start.html';
                 }, 2000); // 2 Sekunden warten
@@ -112,7 +132,31 @@
                 document.getElementById('error-message').style.display = 'block';
             }
         });
+
+        // Event-Listener für den Button "Mit BahnID anmelden"
+        document.getElementById('bahnid-button').addEventListener('click', function() {
+            // Zeigt das Code-Eingabefeld an
+            document.getElementById('code-container').style.display = 'block';
+        });
+
+        // Event-Listener für das Einlösen des Codes
+        document.getElementById('bahnid-submit').addEventListener('click', function() {
+            const enteredCode = document.getElementById('bahnid-code').value;
+
+            // Überprüfen, ob der eingegebene Code korrekt ist
+            if (enteredCode === "2202") {
+                // Erfolgreiche Code-Eingabe, weiterleiten zur gleichen Seite wie bei Login
+                document.getElementById('dbSound').play(); // Sound abspielen
+
+                setTimeout(function() {
+                    window.location.href = 'https://xyswift-tools.github.io/DBSITE/start.html';
+                }, 2000); // 2 Sekunden warten
+            } else {
+                // Fehlermeldung anzeigen, wenn der Code falsch ist
+                document.getElementById('code-error-message').style.display = 'block';
+            }
+        });
     </script>
 
 </body>
-</html>    
+</html>
