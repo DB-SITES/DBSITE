@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vielen Dank für Ihren Kauf</title>
+    <style>
+        /* Deutsche Bahn Farben und Stil */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .header {
+            background-color: #e2001a; /* DB Rot */
+            color: #ffffff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .content {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .content h2 {
+            font-size: 1.5rem;
+            color: #000000;
+        }
+
+        .content p {
+            font-size: 1rem;
+            color: #333333;
+        }
+
+        .footer {
+            background-color: #e2001a;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Vielen Dank für Ihren Kauf!</h1>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <h2>Ihre Buchung wurde erfolgreich abgeschlossen</h2>
+        <p>
+            Wir wünschen Ihnen eine angenehme Reise.<br>
+            Vielen Dank, dass Sie die Deutsche Bahn gewählt haben.
+        </p>
+        <p><strong>Bitte behalten Sie Ihre Bestätigungsnummer bereit.</strong></p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© Deutsche Bahn AG</p>
+    </div>
+
+    <!-- Audio -->
+    <audio autoplay>
+        <source src="b1.mp3" type="audio/mp3">
+        Ihr Browser unterstützt keine Audioelemente.
+    </audio>
+</body>
+</html>
