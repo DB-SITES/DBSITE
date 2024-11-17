@@ -41,6 +41,13 @@
             color: #333333;
         }
 
+        .confirmation-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e2001a;
+            margin-top: 20px;
+        }
+
         .footer {
             background-color: #e2001a;
             color: #ffffff;
@@ -56,6 +63,22 @@
             margin: 0;
         }
     </style>
+    <script>
+        // Funktion, um eine zufällige 16-stellige Zahl zu generieren
+        function generateConfirmationNumber() {
+            let number = '';
+            for (let i = 0; i < 16; i++) {
+                number += Math.floor(Math.random() * 10); // Zufällige Ziffer zwischen 0 und 9
+            }
+            return number;
+        }
+
+        // Bestätigungsnummer anzeigen
+        document.addEventListener("DOMContentLoaded", () => {
+            const confirmationElement = document.getElementById('confirmation-number');
+            confirmationElement.textContent = generateConfirmationNumber();
+        });
+    </script>
 </head>
 <body>
     <!-- Header -->
@@ -70,7 +93,8 @@
             Wir wünschen Ihnen eine angenehme Reise.<br>
             Vielen Dank, dass Sie die Deutsche Bahn gewählt haben.
         </p>
-        <p><strong>Bitte behalten Sie Ihre Bestätigungsnummer bereit.</strong></p>
+        <p><strong>Bitte behalten Sie Ihre Bestätigungsnummer bereit:</strong></p>
+        <p class="confirmation-number" id="confirmation-number"></p>
     </div>
 
     <!-- Footer -->
