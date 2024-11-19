@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Freiherr von Stein Schule - Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin: 10px 0 5px;
+      color: #555;
+    }
+
+    input {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .alert {
+      text-align: center;
+      margin: 15px 0;
+      color: red;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .admin-actions {
+      display: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Freiherr von Stein Schule</h1>
+    <form id="loginForm">
+      <label for="username">Benutzername:</label>
+      <input type="text" id="username" required>
+
+      <label for="password">Passwort:</label>
+      <input type="password" id="password" required>
+
+      <button type="submit">Anmelden</button>
+    </form>
+
+    <div id="alert" class="alert"></div>
+
+    <!-- Admin Actions -->
+    <div class="admin-actions" id="adminActions">
+      <h2>Admin: Benutzerverwaltung</h2>
+      <form id="adminForm">
+        <label for="editUsername">Benutzername bearbeiten:</label>
+        <input type="text" id="editUsername">
+
+        <label for="newStep">Neuer Step of Trust:</label>
+        <input type="text" id="newStep">
+
+        <label for="newPassword">Neues Passwort:</label>
+        <input type="password" id="newPassword">
+
+        <button type="submit">Änderungen speichern</button>
+      </form>
+      <div id="adminAlert" class="alert"></div>
+    </div>
+  </div>
+
+  <script>
+    // Benutzerliste als Beispiel
+    const users = [
+      {
+        username: "schueler1",
+        password: "passwort123",
+        stepOfTrust: "Step 1",
+        role: "student"
+      },
+      {
+        username: "admin",
+        password: "admin123",
+        stepOfTrust: null,
+        role: "admin"
+      }
+    ];
+
+    const loginForm = document.getElementById("loginForm");
+    const adminForm = document.getElementById("adminForm");
+    const alertDiv = document.getElementById("alert");
+    const adminActions = document.getElementById("adminActions");
+    const adminAlertDiv = document.getElementById("adminAlert");
+
+    // Funktion: Login-Validierung
+    loginForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      const user = users.find(u => u.username === username && u.password === password);
+
+      if (user) {
+        if (user.role === "student") {
+          alertDiv.textContent = `Willkommen, ${user.username}. Dein Step of Trust: ${user.stepOfTrust}`;
+          alertDiv.className = "alert success";
+        } else if (user.role === "admin") {
+          alertDiv.textContent = "Admin-Login erfolgreich.";
+          alertDiv.className = "alert success";
+          adminActions.style.display = "block";
+        }
+      } else {
+        alertDiv.textContent = "Ungültige Anmeldedaten.";
+        alertDiv.className = "alert";
+      }
+    });
+
+    // Funktion: Admin-Benutzerverwaltung
+    adminForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const editUsername = document.getElementById("editUsername").value;
+      const newStep = document.getElementById("newStep").value;
+      const newPassword = document.getElementById("newPassword").value;
+
+      const user = users.find(u => u.username === editUsername);
+
+      if (user) {
+        if (newStep) user.stepOfTrust = newStep;
+        if (newPassword) user.password = newPassword;
+
+        adminAlertDiv.textContent = `Benutzer ${user.username} wurde aktualisiert.`;
+        adminAlertDiv.className = "alert success";
+      } else {
+        adminAlertDiv.textContent = "Benutzer nicht gefunden.";
+        adminAlertDiv.className = "alert";
+      }
+    });
+  </script>
+</body>
+</html>
