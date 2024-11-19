@@ -70,6 +70,45 @@
       display: none;
       margin-top: 20px;
     }
+
+    /* Statusbar Styles */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .status-bar .level {
+      flex: 1;
+      height: 10px;
+      margin: 0 5px;
+      border-radius: 5px;
+    }
+
+    .level-1 {
+      background-color: red;
+    }
+
+    .level-2 {
+      background-color: orange;
+    }
+
+    .level-3 {
+      background-color: yellow;
+    }
+
+    .level-4 {
+      background-color: lightgreen;
+    }
+
+    .level-5 {
+      background-color: green;
+    }
+
+    .level.active {
+      border: 2px solid black;
+    }
   </style>
 </head>
 <body>
@@ -87,6 +126,15 @@
 
     <div id="alert" class="alert"></div>
 
+    <!-- Statusbar -->
+    <div class="status-bar" id="statusBar">
+      <div class="level level-1"></div>
+      <div class="level level-2"></div>
+      <div class="level level-3"></div>
+      <div class="level level-4"></div>
+      <div class="level level-5"></div>
+    </div>
+
     <!-- Admin Actions -->
     <div class="admin-actions" id="adminActions">
       <h2>Admin: Benutzerverwaltung</h2>
@@ -95,7 +143,7 @@
         <input type="text" id="editUsername">
 
         <label for="newStep">Neuer Step of Trust:</label>
-        <input type="text" id="newStep">
+        <input type="number" id="newStep" min="1" max="5">
 
         <label for="newPassword">Neues Passwort:</label>
         <input type="password" id="newPassword">
@@ -112,7 +160,7 @@
       {
         username: "schueler1",
         password: "passwort123",
-        stepOfTrust: "Step 1",
+        stepOfTrust: 1,
         role: "student"
       },
       {
@@ -128,6 +176,19 @@
     const alertDiv = document.getElementById("alert");
     const adminActions = document.getElementById("adminActions");
     const adminAlertDiv = document.getElementById("adminAlert");
+    const statusBar = document.getElementById("statusBar");
+    const levels = statusBar.querySelectorAll(".level");
+
+    // Funktion: Statusbar aktualisieren
+    function updateStatusBar(step) {
+      levels.forEach((level, index) => {
+        if (index < step) {
+          level.classList.add("active");
+        } else {
+          level.classList.remove("active");
+        }
+      });
+    }
 
     // Funktion: Login-Validierung
     loginForm.addEventListener("submit", (event) => {
@@ -141,6 +202,7 @@
         if (user.role === "student") {
           alertDiv.textContent = `Willkommen, ${user.username}. Dein Step of Trust: ${user.stepOfTrust}`;
           alertDiv.className = "alert success";
+          updateStatusBar(user.stepOfTrust);
         } else if (user.role === "admin") {
           alertDiv.textContent = "Admin-Login erfolgreich.";
           alertDiv.className = "alert success";
@@ -157,17 +219,18 @@
       event.preventDefault();
 
       const editUsername = document.getElementById("editUsername").value;
-      const newStep = document.getElementById("newStep").value;
+      const newStep = parseInt(document.getElementById("newStep").value);
       const newPassword = document.getElementById("newPassword").value;
 
       const user = users.find(u => u.username === editUsername);
 
       if (user) {
-        if (newStep) user.stepOfTrust = newStep;
+        if (newStep >= 1 && newStep <= 5) user.stepOfTrust = newStep;
         if (newPassword) user.password = newPassword;
 
         adminAlertDiv.textContent = `Benutzer ${user.username} wurde aktualisiert.`;
         adminAlertDiv.className = "alert success";
+        updateStatusBar(newStep);
       } else {
         adminAlertDiv.textContent = "Benutzer nicht gefunden.";
         adminAlertDiv.className = "alert";
