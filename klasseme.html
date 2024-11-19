@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schülerverwaltung</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #f4f4f4;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .hidden {
+            display: none;
+        }
+        .form-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Schüler der Klasse ME</h1>
+
+    <!-- Login Formular -->
+    <div id="loginSection">
+        <h2>Bitte melde dich an</h2>
+        <form id="loginForm">
+            <label for="password">Passwort:</label>
+            <input type="password" id="password" required>
+            <button type="submit">Anmelden</button>
+        </form>
+        <p id="errorMessage" class="hidden" style="color: red;">Falsches Passwort!</p>
+    </div>
+
+    <!-- Schüleranzeige und Passwortänderung -->
+    <div id="schuelerSection" class="hidden">
+        <h3>Schülerliste</h3>
+        <ul id="studentList"></ul>
+
+        <div class="form-container">
+            <h3>Passwort ändern</h3>
+            <form id="passwordChangeForm">
+                <label for="newPassword">Neues Passwort:</label>
+                <input type="password" id="newPassword" required>
+                <button type="submit">Passwort ändern</button>
+            </form>
+        </div>
+
+        <div class="form-container">
+            <h3>Schülerdaten bearbeiten</h3>
+            <form id="editStudentForm">
+                <label for="editName">Neuer Name:</label>
+                <input type="text" id="editName" required>
+                <button type="submit">Schülernamen ändern</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Initialdaten der Schüler
+        const students = [
+            { firstName: 'Paul', lastName: 'Schmidt' },
+            { firstName: 'Luca', lastName: 'Sternberg' },
+            { firstName: 'Maxim', lastName: 'Getz' },
+            { firstName: 'Niklas', lastName: 'Seibel' }
+        ];
+
+        const initialPassword = "01099"; // Standard-Passwort
+        let currentPassword = localStorage.getItem('password') || initialPassword; // Aktuelles Passwort aus LocalStorage holen
+        let isLoggedIn = false;
+
+        // HTML-Elemente
+        const loginSection = document.getElementById('loginSection');
+        const schuelerSection = document.getElementById('schuelerSection');
+        const studentList = document.getElementById('studentList');
+        const errorMessage = document.getElementById('errorMessage');
+        const passwordChangeForm = document.getElementById('passwordChangeForm');
+        const editStudentForm = document.getElementById('editStudentForm');
+
+        // Anzeige der Schülerliste
+        function displayStudents() {
+            studentList.innerHTML = ''; // Liste zurücksetzen
+            students.forEach((student, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${student.firstName} ${student.lastName}`;
+                studentList.appendChild(li);
+            });
+        }
+
+        // Überprüfung des Passworts
+        function login(password) {
+            if (password === currentPassword) {
+                isLoggedIn = true;
+                loginSection.classList.add('hidden');
+                schuelerSection.classList.remove('hidden');
+                displayStudents();
+            } else {
+                errorMessage.classList.remove('hidden');
+            }
+        }
+
+        // Passwort ändern
+        passwordChangeForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newPassword = document.getElementById('newPassword').value;
+            currentPassword = newPassword;
+            localStorage.setItem('password', newPassword); // Neues Passwort speichern
+            alert('Passwort wurde erfolgreich geändert!');
+        });
+
+        // Schülernamen ändern
+        editStudentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newName = document.getElementById('editName').value;
+            if (newName.trim()) {
+                students[0].firstName = newName; // Ändert den Namen des ersten Schülers
+                displayStudents();
+                alert('Schülername wurde geändert!');
+            }
+        });
+
+        // Login-Formular absenden
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            login(password);
+        });
+
+        // Initiale Anzeige: Wenn Benutzer bereits eingeloggt ist, zeige Schüler
+        if (localStorage.getItem('password')) {
+            login(localStorage.getItem('password'));
+        }
+
+    </script>
+</body>
+</html>
