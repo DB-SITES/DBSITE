@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steps of Trust</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .progress-container {
+            width: 80%;
+            margin: 20px auto;
+            background: #e0e0e0;
+            border-radius: 25px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 30px;
+            background: #4caf50;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .info {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Steps of Trust</h1>
+    <div class="info">
+        <p id="student-info">Lade Schülerinformationen...</p>
+        <p id="progress-text"></p>
+    </div>
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <script>
+        // Funktion zum Abrufen des URL-Parameters
+        function getQueryParameter(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        // Schülerdaten (Demo: Hier könnten echte Daten aus einer Datenbank geladen werden)
+        const studentProgress = {
+            "schueler1@fvss.de": 30, // Beispiel: Schüler 1 hat 30% Fortschritt
+            "schueler2@fvss.de": 60,
+            "schueler3@fvss.de": 90
+        };
+
+        // E-Mail aus der URL abrufen
+        const email = getQueryParameter("email");
+
+        // Elemente abrufen
+        const progressBar = document.getElementById("progress-bar");
+        const studentInfo = document.getElementById("student-info");
+        const progressText = document.getElementById("progress-text");
+
+        // Fortschritt basierend auf der E-Mail anzeigen
+        if (email && studentProgress[email]) {
+            const progress = studentProgress[email];
+            studentInfo.textContent = `Schüler: ${email}`;
+            progressText.textContent = `Fortschritt: ${progress}%`;
+            progressBar.style.width = `${progress}%`;
+        } else {
+            studentInfo.textContent = "Schülerinformationen konnten nicht geladen werden.";
+            progressText.textContent = "Keine Fortschrittsdaten verfügbar.";
+        }
+    </script>
+</body>
+</html>
