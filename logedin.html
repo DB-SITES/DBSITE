@@ -68,13 +68,15 @@
 
         // Schülerdaten mit 5 Stufen (0 = Neustarter, 4 = Champion)
         const studentProgress = {
-            "schueler1@fvss.de": 0, // Neustarter
-            "schueler2@fvss.de": 2, // Durchstarter
-            "schueler3@fvss.de": 4  // Champion
+            "maxim.getz@fvss.de": 0, // Neustarter
+            "admin@fvss.de": 6,
+            "schueler3@fvss.de": 2,
+            "schueler5@fvss.de": 2,
+            "schueler4@fvss.de": 4  // Champion
         };
 
         // Fortschrittsstufen
-        const stages = ["Neustarter", "Starter", "Durchstarter", "Sprinter", "Champion"];
+        const stages = ["Neustarter", "Starter", "Durchstarter", "Sprinter", "Champion", "Admin"];
 
         // E-Mail aus der URL abrufen
         const email = getQueryParameter("email");
