@@ -66,8 +66,9 @@
     <div class="login-container">
         <img src="IMG_0190.webp" alt="Logo" style="width: 150px;">
         <h1>Anmelden</h1>
-        <form id="loginForm" action="https://db-sites.github.io/DBSITE/logedin" method="GET">
-            <input type="text" class="input-field" placeholder="Schueler Adresse" name="email" required>
+        <form id="loginForm" action="https://db-sites.github.io/DBSITE/logedin" method="GET" onsubmit="return validateForm()">
+            <input type="text" id="email" class="input-field" placeholder="Schueler Adresse" name="email" required>
+            <input type="password" id="password" class="input-field" placeholder="Passwort" required>
             <div>
                 <button type="button" class="btn secondary-btn" onclick="window.history.back();">Zurück</button>
                 <button type="submit" class="btn">Weiter</button>
@@ -78,5 +79,26 @@
             <p><a href="Keincode" class="link">Sie können nicht auf Ihren Code zugreifen?</a></p>
         </div>
     </div>
+    <script>
+        function validateForm() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            // Prüfen, ob die E-Mail mit @fvss.de endet
+            if (!email.endsWith("@fvss.de")) {
+                alert("Die E-Mail-Adresse muss auf @fvss.de enden.");
+                return false;
+            }
+
+            // Prüfen, ob das Passwort korrekt ist
+            if (password !== "Schule2.0") {
+                alert("Das Passwort ist falsch.");
+                return false;
+            }
+
+            // Weiterleitung nur bei korrekten Eingaben
+            return true;
+        }
+    </script>
 </body>
 </html>
