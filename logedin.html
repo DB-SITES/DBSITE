@@ -15,13 +15,27 @@
             margin: 20px auto;
             background: #e0e0e0;
             border-radius: 25px;
-            overflow: hidden;
+            position: relative;
+            height: 30px;
         }
         .progress-bar {
-            height: 30px;
+            height: 100%;
             background: #4caf50;
             width: 0%;
             transition: width 0.3s ease;
+        }
+        .progress-points {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            top: -10px;
+        }
+        .progress-point {
+            width: 10px;
+            height: 10px;
+            background: #000;
+            border-radius: 50%;
         }
         .info {
             margin: 10px 0;
@@ -36,6 +50,13 @@
     </div>
     <div class="progress-container">
         <div class="progress-bar" id="progress-bar"></div>
+        <div class="progress-points">
+            <div class="progress-point"></div>
+            <div class="progress-point"></div>
+            <div class="progress-point"></div>
+            <div class="progress-point"></div>
+            <div class="progress-point"></div>
+        </div>
     </div>
 
     <script>
@@ -45,12 +66,15 @@
             return params.get(name);
         }
 
-        // Schülerdaten (Demo: Hier könnten echte Daten aus einer Datenbank geladen werden)
+        // Schülerdaten mit 5 Stufen (0 = Neustarter, 4 = Champion)
         const studentProgress = {
-            "schueler1@fvss.de": 30, // Beispiel: Schüler 1 hat 30% Fortschritt
-            "schueler2@fvss.de": 60,
-            "schueler3@fvss.de": 90
+            "schueler1@fvss.de": 0, // Neustarter
+            "schueler2@fvss.de": 2, // Durchstarter
+            "schueler3@fvss.de": 4  // Champion
         };
+
+        // Fortschrittsstufen
+        const stages = ["Neustarter", "Starter", "Durchstarter", "Sprinter", "Champion"];
 
         // E-Mail aus der URL abrufen
         const email = getQueryParameter("email");
@@ -61,11 +85,12 @@
         const progressText = document.getElementById("progress-text");
 
         // Fortschritt basierend auf der E-Mail anzeigen
-        if (email && studentProgress[email]) {
-            const progress = studentProgress[email];
+        if (email && studentProgress[email] !== undefined) {
+            const stage = studentProgress[email];
+            const progressPercentage = (stage + 1) * 20; // Fortschritt in % für die Bar
             studentInfo.textContent = `Schüler: ${email}`;
-            progressText.textContent = `Fortschritt: ${progress}%`;
-            progressBar.style.width = `${progress}%`;
+            progressText.textContent = `Status: ${stages[stage]}`;
+            progressBar.style.width = `${progressPercentage}%`;
         } else {
             studentInfo.textContent = "Schülerinformationen konnten nicht geladen werden.";
             progressText.textContent = "Keine Fortschrittsdaten verfügbar.";
