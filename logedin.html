@@ -22,7 +22,7 @@
             height: 100%;
             background: #4caf50;
             width: 0%;
-            transition: width 2s ease; /* Animation: Progress-Bar lädt langsam */
+            transition: width 2s ease; /* Animation für Progress-Bar */
         }
         .progress-points {
             position: absolute;
@@ -39,6 +39,9 @@
         }
         .info {
             margin: 10px 0;
+        }
+        .hidden { 
+            display: none; 
         }
     </style>
 </head>
@@ -66,13 +69,13 @@
             return params.get(name);
         }
 
-        // Schülerdaten mit 5 Stufen (0 = Neustarter, 4 = Champion)
+        // Schülerdaten mit 6 Stufen (5 = Admin, unsichtbar für normale Nutzer)
         const studentProgress = {
-            "maxim.getz@fvss.de": 2, // Neustarter
-            "admin@fvss.de": 5,
+            "maxim.getz@fvss.de": 2, // Durchstarter
+            "admin@fvss.de": 5,      // Admin
             "schueler3@fvss.de": 2,
-            "schueler5@fvss.de": 2,
-            "schueler4@fvss.de": 4  // Champion
+            "schueler5@fvss.de": 1,
+            "schueler4@fvss.de": 4   // Champion
         };
 
         // Fortschrittsstufen
@@ -89,14 +92,20 @@
         // Fortschritt basierend auf der E-Mail anzeigen
         if (email && studentProgress[email] !== undefined) {
             const stage = studentProgress[email];
-            const progressPercentage = (stage + 1) * 20; // Fortschritt in % für die Bar
+            const progressPercentage = (stage <= 4 ? (stage + 1) * 20 : 100); // Admin ist 100%, aber kein Punkt
+
             studentInfo.textContent = `Schüler: ${email}`;
             progressText.textContent = `Status: ${stages[stage]}`;
-            
+
             // Lade die Progress-Bar mit einer Verzögerung
             setTimeout(() => {
                 progressBar.style.width = `${progressPercentage}%`;
             }, 500); // Kurze Verzögerung, bevor die Animation startet
+
+            // Admin-Status nur anzeigen, wenn Level 5
+            if (stage === 5) {
+                studentInfo.textContent = `Schüler: ${email} (Admin)`;
+            }
         } else {
             studentInfo.textContent = "Schülerinformationen konnten nicht geladen werden.";
             progressText.textContent = "Keine Fortschrittsdaten verfügbar.";
