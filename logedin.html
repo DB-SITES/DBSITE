@@ -41,7 +41,7 @@
             height: 100%;
             background: linear-gradient(to right, #00f260, #0575e6);
             width: 0%;
-            transition: width 2s ease; /* Animation */
+            transition: width 2s ease;
         }
 
         .progress-points {
@@ -70,10 +70,6 @@
         .info span {
             font-weight: bold;
             color: #ffd700;
-        }
-
-        .hidden { 
-            display: none; 
         }
 
         footer {
@@ -113,52 +109,58 @@
     </footer>
 
     <script>
-        // Funktion zum Abrufen des URL-Parameters
+        // Funktion zum Abrufen von URL-Parametern
         function getQueryParameter(name) {
             const params = new URLSearchParams(window.location.search);
             return params.get(name);
         }
 
-        // Schülerdaten mit 6 Stufen (5 = Admin, unsichtbar für normale Nutzer)
+        // Schülerdaten mit 6 Stufen (5 = Admin)
         const studentProgress = {
-            "maxim.getz@fvss.de": 2, // Durchstarter
-            "admin@fvss.de": 5,      // Admin
+            "maxim.getz@fvss.de": 2,
+            "admin@fvss.de": 5,
             "schueler3@fvss.de": 2,
             "schueler5@fvss.de": 1,
-            "schueler4@fvss.de": 4   // Champion
+            "schueler4@fvss.de": 4
         };
 
         // Fortschrittsstufen
         const stages = ["Neustarter", "Starter", "Durchstarter", "Sprinter", "Champion", "Lehrer"];
 
-        // E-Mail aus der URL abrufen
+        // URL-Parameter abrufen
         const email = getQueryParameter("email");
+        const password = getQueryParameter("passwort");
 
         // Elemente abrufen
         const progressBar = document.getElementById("progress-bar");
         const studentInfo = document.getElementById("student-info");
         const progressText = document.getElementById("progress-text");
 
-        // Fortschritt basierend auf der E-Mail anzeigen
-        if (email && studentProgress[email] !== undefined) {
+        // Passwort überprüfen
+        if (password !== "Schule2.0") {
+            studentInfo.textContent = "Fehler: Schülerdaten konnten nicht geladen werden.";
+            progressText.textContent = "Ungültiges Passwort.";
+        } else if (email && studentProgress[email] !== undefined) {
+            // Fortschritt laden, wenn Passwort korrekt ist
             const stage = studentProgress[email];
-            const progressPercentage = (stage <= 4 ? (stage + 1) * 20 : 100); // Admin ist 100%, aber kein Punkt
+            const progressPercentage = (stage <= 4 ? (stage + 1) * 20 : 100);
 
             studentInfo.innerHTML = `Schüler: <span>${email}</span>`;
             progressText.textContent = `Status: ${stages[stage]}`;
 
-            // Lade die Progress-Bar mit einer Verzögerung
+            // Lade die Progress-Bar mit Animation
             setTimeout(() => {
                 progressBar.style.width = `${progressPercentage}%`;
-            }, 500); // Kurze Verzögerung, bevor die Animation startet
+            }, 500);
 
-            // Admin-Status nur anzeigen, wenn Level 5
+            // Admin-Status anzeigen
             if (stage === 5) {
                 studentInfo.innerHTML = `Schüler: <span>${email} (Admin)</span>`;
             }
         } else {
-            studentInfo.textContent = "Schülerinformationen konnten nicht geladen werden.";
-            progressText.textContent = "Keine Fortschrittsdaten verfügbar.";
+            // Fehlermeldung bei fehlenden Daten
+            studentInfo.textContent = "Fehler: Schülerdaten konnten nicht geladen werden.";
+            progressText.textContent = "E-Mail-Adresse nicht gefunden.";
         }
     </script>
 </body>
