@@ -22,7 +22,7 @@
             height: 100%;
             background: #4caf50;
             width: 0%;
-            transition: width 0.3s ease;
+            transition: width 2s ease; /* Animation: Progress-Bar lädt langsam */
         }
         .progress-points {
             position: absolute;
@@ -69,7 +69,7 @@
         // Schülerdaten mit 5 Stufen (0 = Neustarter, 4 = Champion)
         const studentProgress = {
             "maxim.getz@fvss.de": 2, // Neustarter
-            "admin@fvss.de": 6,
+            "admin@fvss.de": 5,
             "schueler3@fvss.de": 2,
             "schueler5@fvss.de": 2,
             "schueler4@fvss.de": 4  // Champion
@@ -92,7 +92,11 @@
             const progressPercentage = (stage + 1) * 20; // Fortschritt in % für die Bar
             studentInfo.textContent = `Schüler: ${email}`;
             progressText.textContent = `Status: ${stages[stage]}`;
-            progressBar.style.width = `${progressPercentage}%`;
+            
+            // Lade die Progress-Bar mit einer Verzögerung
+            setTimeout(() => {
+                progressBar.style.width = `${progressPercentage}%`;
+            }, 500); // Kurze Verzögerung, bevor die Animation startet
         } else {
             studentInfo.textContent = "Schülerinformationen konnten nicht geladen werden.";
             progressText.textContent = "Keine Fortschrittsdaten verfügbar.";
