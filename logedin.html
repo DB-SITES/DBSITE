@@ -6,24 +6,44 @@
     <title>Steps of Trust</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #4facfe, #00f2fe);
+            color: #fff;
             text-align: center;
             padding: 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
         .progress-container {
             width: 80%;
+            max-width: 500px;
             margin: 20px auto;
-            background: #e0e0e0;
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 25px;
             position: relative;
             height: 30px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
+
         .progress-bar {
             height: 100%;
-            background: #4caf50;
+            background: linear-gradient(to right, #00f260, #0575e6);
             width: 0%;
-            transition: width 2s ease; /* Animation für Progress-Bar */
+            transition: width 2s ease; /* Animation */
         }
+
         .progress-points {
             position: absolute;
             width: 100%;
@@ -31,17 +51,44 @@
             justify-content: space-between;
             top: -10px;
         }
+
         .progress-point {
-            width: 10px;
-            height: 10px;
-            background: #000;
+            width: 15px;
+            height: 15px;
+            background: #fff;
             border-radius: 50%;
+            border: 3px solid #00f260;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
+
         .info {
-            margin: 10px 0;
+            margin: 20px 0;
+            font-size: 1.2em;
+            line-height: 1.5;
         }
+
+        .info span {
+            font-weight: bold;
+            color: #ffd700;
+        }
+
         .hidden { 
             display: none; 
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        footer a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -61,6 +108,9 @@
             <div class="progress-point"></div>
         </div>
     </div>
+    <footer>
+        <p>Entwickelt für die <span>FVSS</span>. <a href="#">Impressum</a></p>
+    </footer>
 
     <script>
         // Funktion zum Abrufen des URL-Parameters
@@ -94,7 +144,7 @@
             const stage = studentProgress[email];
             const progressPercentage = (stage <= 4 ? (stage + 1) * 20 : 100); // Admin ist 100%, aber kein Punkt
 
-            studentInfo.textContent = `Schüler: ${email}`;
+            studentInfo.innerHTML = `Schüler: <span>${email}</span>`;
             progressText.textContent = `Status: ${stages[stage]}`;
 
             // Lade die Progress-Bar mit einer Verzögerung
@@ -104,7 +154,7 @@
 
             // Admin-Status nur anzeigen, wenn Level 5
             if (stage === 5) {
-                studentInfo.textContent = `Schüler: ${email} (Admin)`;
+                studentInfo.innerHTML = `Schüler: <span>${email} (Admin)</span>`;
             }
         } else {
             studentInfo.textContent = "Schülerinformationen konnten nicht geladen werden.";
