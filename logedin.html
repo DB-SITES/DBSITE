@@ -129,7 +129,7 @@
 
         // URL-Parameter abrufen
         const email = getQueryParameter("email");
-        const password = getQueryParameter("passwort");
+        const password = getQueryParameter("password"); // Überprüfen Sie, ob "password" korrekt ist.
 
         // Elemente abrufen
         const progressBar = document.getElementById("progress-bar");
@@ -137,30 +137,33 @@
         const progressText = document.getElementById("progress-text");
 
         // Passwort überprüfen
-        if (password !== "Schule2.0") {
-            studentInfo.textContent = "Fehler: Schülerdaten konnten nicht geladen werden.";
-            progressText.textContent = "Ungültiges Passwort.";
-        } else if (email && studentProgress[email] !== undefined) {
-            // Fortschritt laden, wenn Passwort korrekt ist
-            const stage = studentProgress[email];
-            const progressPercentage = (stage <= 4 ? (stage + 1) * 20 : 100);
+        if (password === "Schule2.0") {
+            if (email && studentProgress[email] !== undefined) {
+                // Fortschritt laden, wenn Passwort korrekt ist
+                const stage = studentProgress[email];
+                const progressPercentage = (stage <= 4 ? (stage + 1) * 20 : 100);
 
-            studentInfo.innerHTML = `Schüler: <span>${email}</span>`;
-            progressText.textContent = `Status: ${stages[stage]}`;
+                studentInfo.innerHTML = `Schüler: <span>${email}</span>`;
+                progressText.textContent = `Status: ${stages[stage]}`;
 
-            // Lade die Progress-Bar mit Animation
-            setTimeout(() => {
-                progressBar.style.width = `${progressPercentage}%`;
-            }, 500);
+                // Lade die Progress-Bar mit Animation
+                setTimeout(() => {
+                    progressBar.style.width = `${progressPercentage}%`;
+                }, 500);
 
-            // Admin-Status anzeigen
-            if (stage === 5) {
-                studentInfo.innerHTML = `Schüler: <span>${email} (Admin)</span>`;
+                // Admin-Status anzeigen
+                if (stage === 5) {
+                    studentInfo.innerHTML = `Schüler: <span>${email} (Admin)</span>`;
+                }
+            } else {
+                // Fehlermeldung bei fehlenden Daten
+                studentInfo.textContent = "Fehler: Schülerdaten konnten nicht geladen werden.";
+                progressText.textContent = "E-Mail-Adresse nicht gefunden.";
             }
         } else {
-            // Fehlermeldung bei fehlenden Daten
+            // Passwort ist nicht korrekt
             studentInfo.textContent = "Fehler: Schülerdaten konnten nicht geladen werden.";
-            progressText.textContent = "E-Mail-Adresse nicht gefunden.";
+            progressText.textContent = "Ungültiges Passwort.";
         }
     </script>
 </body>
