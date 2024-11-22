@@ -129,19 +129,14 @@
 
         // URL-Parameter abrufen
         const email = getQueryParameter("email");
-        const password = getQueryParameter("passwort");
 
         // Elemente abrufen
         const progressBar = document.getElementById("progress-bar");
         const studentInfo = document.getElementById("student-info");
         const progressText = document.getElementById("progress-text");
 
-        // Passwort überprüfen
-        if (password !== "Schule2.0") {
-            studentInfo.textContent = "Fehler: Schülerdaten konnten nicht geladen werden.";
-            progressText.textContent = "Ungültiges Passwort.";
-        } else if (email && studentProgress[email] !== undefined) {
-            // Fortschritt laden, wenn Passwort korrekt ist
+        // Fortschritt überprüfen und anzeigen
+        if (email && studentProgress[email] !== undefined) {
             const stage = studentProgress[email];
             const progressPercentage = (stage <= 4 ? (stage + 1) * 20 : 100);
 
